@@ -1,0 +1,6 @@
+in: query
+name: action
+required: true
+schema:
+  $ref: '#/components/schemas/Action'
+description: action

@@ -1,0 +1,17 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+        description: user id
+      tags:
+        type: array
+        items:
+          type: string
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

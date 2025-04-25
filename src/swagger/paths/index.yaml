@@ -1,0 +1,36 @@
+# inbound part
+/developer/contact:
+  $ref: ./inbound/contact.yaml
+/developer/video:
+  $ref: ./inbound/video.yaml
+/developer/pdf:
+  $ref: ./inbound/pdf.yaml
+/developer/image:
+  $ref: ./inbound/image.yaml
+/developer/automation:
+  $ref: ./inbound/automation.yaml
+/developer/template:
+  $ref: ./inbound/template.yaml
+/developer/followup:
+  $ref: ./inbound/followup.yaml
+/developer/note:
+  $ref: ./inbound/note.yaml
+/developer/tag:
+  $ref: ./inbound/tag.yaml
+/developer/send-video:
+  $ref: ./inbound/send-video.yaml
+/developer/send-pdf:
+  $ref: ./inbound/send-pdf.yaml
+/developer/send-image:
+  $ref: ./inbound/send-image.yaml
+
+
+# outbound part
+/outbound/subscribe:
+  $ref: ./outbound/subscribe.yaml
+
+/outbound/unsubscribe:
+  $ref: ./outbound/unsubscribe.yaml
+
+/outbound/perform:
+  $ref: ./outbound/perform.yaml

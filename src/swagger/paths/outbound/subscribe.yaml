@@ -1,0 +1,27 @@
+post:
+  tags: [ Outbound APIs ]
+  summary: subscribe api
+  description: |
+    Enter the endpoint URL to create a new webhook subscription.
+  security:
+    - crmgAuthorization: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            hookUrl:
+              $ref: '#/components/schemas/Url'
+            action:
+              $ref: '#/components/schemas/Action'                
+  responses:
+    '201':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Id'

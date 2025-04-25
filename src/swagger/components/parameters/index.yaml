@@ -1,0 +1,15 @@
+#Global
+id:
+  $ref: ./global/id.yaml
+email:
+  $ref: ./global/email.yaml
+name:
+  $ref: ./global/name.yaml
+password:
+  $ref: ./global/password.yaml
+url:
+  $ref: ./global/url.yaml
+action:
+  $ref: ./global/action.yaml
+zapier_id:
+  $ref: ./global/zapier_id.yaml

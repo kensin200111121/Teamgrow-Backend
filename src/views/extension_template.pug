@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>crmgrow</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimun-scale=1.0, maximum-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/icons/favicon.ico">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="300">
+  <meta property="og:image" content="/assets/images/thumbnail.jpg">
+  link(rel='stylesheet', type='text/css', href='./theme/css/bootstrap.min.css')
+  <link rel="stylesheet" type="text/css" href="./theme/plugins/quill/quill.css">
+  script(src='./theme/js/jquery.min.js')
+  script(src='./theme/js/popper.min.js')
+  script(src='./theme/js/bootstrap.min.js')
+  script(type='text/javascript', src='./theme/plugins/quill/quill.min.js')
+
+  script(type='text/javascript', src='./theme/core/extension_template.js')
+  script(type='text/javascript', src='./assets/js/materialLink.js')
+
+
+  style.
+    body {
+        margin: 0px;
+        user-select: none ;
+    }
+    * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-sizing: border-box;
+    }
+    .ql-toolbar {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+    .ql-toolbar .ql-formats {
+        margin-right: 0;
+    }
+    #description-editor {
+        height: 300px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+    .modal-body {
+        max-height: 450px;
+        overflow: auto;
+    }
+    .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .material-detail {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+    }
+    .material-detail:first-child {
+        margin-top: 0;
+    }
+    .material-detail .material-thumbnail {
+        width: 96px;
+        text-align: center;
+    }
+    .material-detail .material-thumbnail .folder {
+        width: 48px;
+    }
+    .material-detail .material-thumbnail .thumbnail,
+    .material-detail .material-thumbnail .video-thumbnail {
+        display: block;
+        width: 96px;
+        height: 56px;
+        object-fit: contain;
+    }
+    .material-detail .material-thumbnail .video-preview {
+        display: none;
+        width: 96px;
+        height: 56px;
+        object-fit: contain;
+    }
+    .material-detail .material-thumbnail:hover .video-thumbnail {
+        display: none;
+        width: 96px;
+        height: 56px;
+        object-fit: contain;
+    }
+    .material-detail .material-thumbnail:hover .video-preview {
+        display: block;
+        width: 96px;
+        height: 56px;
+        object-fit: contain;
+    }
+    .material-detail .material-title {
+        width: 270px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-left: 16px;
+    }
+    .material-detail .material-action {
+        width: 24px;
+        margin-left: auto;
+    }
+    .material-detail .material-action .material-insert {
+        cursor: pointer;
+    }
+    .btn {
+        background-color: #fff;
+    }
+
+    .border-primary {
+        border-color: #00f!important;
+    }
+
+    .btn-primary {
+        background-color: #00f;
+        color: #fff!important;
+    }
+    .btn-white {
+        color: #0000FF;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary:focus {
+        color: #fff;
+        background-color: #0000d9;
+        border-color: #00c;
+    }
+    .footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .btn.loading {
+        color: transparent!important;
+        background-image: url('./theme/icons/spinner.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        pointer-events: none;
+    }
+</head>
+<div class="container py-5">
+    if type == 'create'
+        <h1>Create Template</h1>
+    if type == 'edit'
+        <h1>Edit Template</h1>
+    if type == 'duplicate'
+        <h1>Duplicate Template</h1>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" name="title" id="title" placeholder="Type title here" required>
+        <div class="invalid-feedback title">Title is required!</div>
+    </div>
+    <div class="form-group">
+        <label fpr="subject">Subject</label>
+        <input type="text" class="form-control" name="subject" id="subject" placeholder="Type subject here" required>
+        <div class="invalid-feedback subject">Subject is required!</div>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <div id="description-editor"></div>
+    </div>
+    <div class="footer">
+        <button class="btn btn-white font-weight-bold cancel mr-2">Cancel</button>
+        if type === 'create'
+            <button class="btn btn-primary border-primary font-weight-bold create">Create</button>
+        if type === 'edit'        
+            <button class="btn btn-primary border-primary font-weight-bold update">Update</button>
+        if type === 'duplicate'
+            <button class="btn btn-primary border-primary font-weight-bold duplicate">Duplicate</button>
+    </div>
+    #material.modal.fade(role="dialog")
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    .modal-title Insert Material
+                    .close(data-dismiss="modal") &times;
+                .modal-body
+                    if data.length > 0
+                        each material in data
+                            .material-detail(id=`${material._id}`)
+                                .material-thumbnail
+                                    if material.material_type == 'video'
+                                        img.video-thumbnail(src=material.thumbnail)
+                                        img.video-preview(src=material.preview)
+                                    else if material.material_type == 'folder'
+                                        img.folder(src="./theme/icons/folder.svg")
+                                    else 
+                                        img.thumbnail(src=material.preview)
+                                .material-title #{material.title}
+                                .material-action
+                                    img.material-insert(src="./theme/icons/plus.svg")
+
+                    else
+                        .empty-material No materials yet
+</div>

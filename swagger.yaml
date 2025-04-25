@@ -1,0 +1,1023 @@
+openapi: 3.1.0
+servers:
+  - url: /api
+info:
+  description: >
+    CRMGROW Inbound/Outbounad API 
+
+    we support the token to call APIs on
+    settings/integration/Integreation/Zappier
+  version: 1.0.0
+  title: CRMGROW API
+  contact:
+    email: support@crmgrow.com
+tags:
+  - name: Inbound APIs
+    description: Inbound api for Zapier
+    tags: null
+  - name: Outbound APIs
+    description: Outbound api for Zapier
+paths:
+  /developer/contact:
+    post:
+      tags:
+        - Inbound APIs
+      summary: Create Contact
+      description: |
+        Add a Contact into CRMGrow account.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/ContactModel'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Respond401Error'
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get Contact
+      description: |
+        Get contact
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/Id'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+                  data:
+                    $ref: '#/components/schemas/ContactModel'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Respond401Error'
+    put:
+      tags:
+        - Inbound APIs
+      summary: Update Contact
+      description: |
+        Update a Contact into CRMGrow account.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/ContactModel'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+  /developer/video:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get videos
+      description: |
+        Get videos
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoModel'
+  /developer/pdf:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get pdfs
+      description: |
+        Get pdfs
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PdfModel'
+  /developer/image:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get images
+      description: |
+        Get images
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageModel'
+  /developer/automation:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get automations
+      description: |
+        Get automations
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AutomationModel'
+  /developer/template:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get templates
+      description: |
+        Get templates
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateModel'
+  /developer/followup:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get followups
+      description: |
+        Get followups
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FollowupModel'
+  /developer/note:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get images
+      description: |
+        Get images
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageModel'
+  /developer/tag:
+    get:
+      tags:
+        - Inbound APIs
+      summary: Get images
+      description: |
+        Get images
+      security:
+        - crmgAuthorization: []
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageModel'
+  /developer/send-video:
+    post:
+      tags:
+        - Inbound APIs
+      summary: Send video
+      description: |
+        Send a video into CRMGrow account.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: '#/components/schemas/Email'
+                video_id:
+                  $ref: '#/components/schemas/Id'
+                template_id:
+                  $ref: '#/components/schemas/Id'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+        '400':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespondError'
+  /developer/send-pdf:
+    post:
+      tags:
+        - Inbound APIs
+      summary: Send pdf
+      description: |
+        Send a pdf into CRMGrow account.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: '#/components/schemas/Email'
+                pdf_id:
+                  $ref: '#/components/schemas/Id'
+                template_id:
+                  $ref: '#/components/schemas/Id'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+        '400':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespondError'
+  /developer/send-image:
+    post:
+      tags:
+        - Inbound APIs
+      summary: Send image
+      description: |
+        Send a image into CRMGrow account.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: '#/components/schemas/Email'
+                image_id:
+                  $ref: '#/components/schemas/Id'
+                template_id:
+                  $ref: '#/components/schemas/Id'
+      responses:
+        '200':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+        '400':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RespondError'
+  /outbound/subscribe:
+    post:
+      tags:
+        - Outbound APIs
+      summary: subscribe api
+      description: |
+        Enter the endpoint URL to create a new webhook subscription.
+      security:
+        - crmgAuthorization: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hookUrl:
+                  $ref: '#/components/schemas/Url'
+                action:
+                  $ref: '#/components/schemas/Action'
+      responses:
+        '201':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    $ref: '#/components/schemas/Id'
+  /outbound/unsubscribe:
+    delete:
+      tags:
+        - Outbound APIs
+      summary: unsubscribe api
+      description: |
+        Enter the endpoint URL to remove a webhook subscription.
+      security:
+        - crmgAuthorization: []
+      parameters:
+        - $ref: '#/components/parameters/zapier_id'
+      responses:
+        '201':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: '#/components/schemas/Status'
+  /outbound/perform:
+    get:
+      tags:
+        - Outbound APIs
+      summary: perform api
+      description: >
+        Enter the endpoint URL Zapier should check for recent items, to provide
+        sample data in the Zap Editor. This request must return an array. Learn
+        more. Required for public apps with a REST Hook trigger.
+      security:
+        - crmgAuthorization: []
+      parameters:
+        - $ref: '#/components/parameters/action'
+      responses:
+        '201':
+          description: crmgrow log in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ContactModel'
+components:
+  securitySchemes:
+    crmgAuthorization:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    Id:
+      type: string
+      description: Id
+      example: 63343ec8d820810042e15e9f
+    Name:
+      type: string
+      description: Name
+      example: Smith
+    Email:
+      type: string
+      description: Email
+      example: xxx@crmgrow.com
+    Status:
+      type: boolean
+      description: status
+      example: true
+    Token:
+      type: string
+      description: Token
+      example: >-
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTc0MjVkMTMwODc5MDAxYmFhYzE5NSIsImFwaV9sb2dnaW4iOnRydWUsImlhdCI6MTY5NTk1NzE3Nn0.ldG4ej6yO4eTwmd9ZhrlWqWlTtSG57qE-OIvOTBDXGo
+    Salt:
+      type: string
+      description: Salt
+      example: c4cd1e648043fe1be1f48b6b330d1b78
+    Hash:
+      type: string
+      description: Hash
+      example: >-
+        c007a9b240197b52e3904dc307fbc1cf7da2cd806a50fd28158c0613e35b4807904946509d204717137417801bd93762192cb682d46f2ac40e491e0ba3263102a385b2a0316c5e46b4819fb08994c96beaf2e80b312ad7f2581b4d968f20fc91a115fabb0e69875a75e341ba52f8e0b426a5d6f243e87ab2d63b6d40f0fa9f73f96318dd628534e838a2cb83abe55f126e81a1a5f8b748f5d2ca0d6d5f35ca152e58bc7fc5168c2782de706704f6248c748d7154cc2e11e7fd6d70f30277f34e3d9444644c95ccc97792affc8ddbd757aee10fb175e613751c45560f6d939079e22eba8e8e8894c669cc3f3ded6a046aee9112da311c8bba5ca52e0f091e13b8385b5698656c7a0e82b20f57ffa111d5643c5d5a12140fe432dfee50bd118aca73255bfdcf2fdec343fea2afc8a03206da8508404e70af1009e0464b35e3d0b9e39847697e078ad5ca4077ba6215db35ed98810223e6ad029e4dd3a418db9a2ca1c2dd94d02be7bedd2428a1d38e2df8710355cb29145f1dbd1ec441467a4555bc1bf4328e070a80067a8d799803a2d23d1b751864ed4b4880052ddbc3cd7fcf0cbe54cf20af529ac46c796ae7c15836da16b31f943f167a79de2364216091fc42f8b376f654aa69cf89dbcc80fc031f9526c0c97461097e388bb3e45c4762d977ce4a50223ee225c41c01cb11c71423f2e7bbb30466500b9b907e99196f7216
+    Cellphone:
+      type: string
+      description: Cell phone
+      example: +1 630-828-7090
+    Datetime:
+      type: string
+      description: Date time
+      example: '2021-10-26T14:49:07.017Z'
+    Url:
+      type: string
+      description: url
+      example: https://xxxx.xxxx.com/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/
+    Action:
+      type: string
+      enum:
+        - add_contact
+        - update_contact
+        - delete_contact
+        - add_deal
+        - move_deal
+        - send_material
+        - watch_material
+        - assigned_automation
+        - create_note
+        - update_note
+        - delete_note
+        - create_task
+        - update_task
+        - delete_task
+      description: action
+    ZapierId:
+      type: string
+      description: Zapier id
+      example: 167967560354498604d80-ca61-11ed-8316-110bfd4445b1
+    ContactModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            first_name:
+              $ref: '#/components/schemas/Name'
+            last_name:
+              $ref: '#/components/schemas/Name'
+            email:
+              $ref: '#/components/schemas/Email'
+            user:
+              $ref: '#/components/schemas/Id'
+              description: user id
+            shared_memebers:
+              type: array
+              items:
+                $ref: '#/components/schemas/Id'
+              description: array of user id
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    VideoModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            user_name:
+              $ref: '#/components/schemas/Name'
+            team_id:
+              $ref: '#/components/schemas/Id'
+            title:
+              type: string
+            company:
+              type: string
+            description:
+              type: string
+            converted:
+              type: string
+            uploaded:
+              type: boolean
+              example: true
+            duration:
+              type: number
+            role:
+              type: string
+              example: admin
+            url:
+              $ref: '#/components/schemas/Url'
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    PdfModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            original_id:
+              $ref: '#/components/schemas/Name'
+            team_id:
+              $ref: '#/components/schemas/Id'
+              description: team id
+            user:
+              $ref: '#/components/schemas/Id'
+              description: user id
+            title:
+              type: string
+            description:
+              type: string
+            preview:
+              type: string
+            type:
+              type: string
+            role:
+              type: string
+            company:
+              type: string
+            key:
+              type: string
+            total_pages:
+              type: number
+            material_theme:
+              type: string
+            capture_form:
+              type: object
+            default_pdf:
+              $ref: '#/components/schemas/Id'
+            shared_pdf:
+              $ref: '#/components/schemas/Id'
+            view_mode:
+              type: string
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    ImageModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            original_id:
+              $ref: '#/components/schemas/Id'
+            team_id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+            title:
+              type: string
+            preview:
+              type: string
+            description:
+              type: string
+            type:
+              type: string
+            key:
+              type: array
+              items:
+                type: string
+            company:
+              type: string
+            role:
+              type: string
+              example: admin
+            url:
+              type: array
+              items:
+                $ref: '#/components/schemas/Url'
+            priority:
+              type: number
+              example: 1000
+            material_theme:
+              type: string
+            enabled_capture:
+              type: boolean
+            default_edited:
+              type: boolean
+            has_shared:
+              type: boolean
+            is_sharable:
+              type: boolean
+            is_download:
+              type: boolean
+            default_image:
+              $ref: '#/components/schemas/Id'
+              description: image id
+            shared_image:
+              $ref: '#/components/schemas/Id'
+              description: image id
+            del:
+              type: boolean
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    AutomationModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            original_id:
+              $ref: '#/components/schemas/Id'
+            parent_id:
+              $ref: '#/components/schemas/Id'
+            title:
+              type: string
+            company:
+              type: string
+            automations:
+              type: array
+              items:
+                type: string
+            type:
+              type: string
+              example: contact
+            label:
+              type: string
+              example: contact
+            role:
+              type: string
+            is_sharable:
+              type: boolean
+            del:
+              type: boolean
+            status:
+              type: boolean
+              example: completed
+            appointment:
+              $ref: '#/components/schemas/Id'
+              description: appointment id
+            meta:
+              type: object
+              properties:
+                action_count:
+                  type: number
+                videos:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Id'
+                    description: video id
+                pdfs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Id'
+                    description: pdf id
+                images:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Id'
+                    description: image id
+                    videos: null
+                  has_email_action:
+                    type: boolean
+                  has_text_action:
+                    type: boolean
+                  has_child_automation:
+                    type: boolean
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    TemplateModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            original_id:
+              $ref: '#/components/schemas/Id'
+            team_id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+            title:
+              type: string
+            subject:
+              type: string
+            content:
+              type: string
+            role:
+              type: string
+            company:
+              type: string
+            video_ids:
+              type: array
+              items:
+                $ref: '#/components/schemas/Id'
+            pdf_ids:
+              type: array
+              items:
+                $ref: '#/components/schemas/Id'
+            image_ids:
+              type: array
+              items:
+                $ref: '#/components/schemas/Id'
+            type:
+              type: string
+            default:
+              type: boolean
+            is_sharable:
+              type: boolean
+            del:
+              type: boolean
+            category:
+              type: string
+            attachments:
+              type: array
+            meta:
+              type: object
+              properties:
+                excerpt:
+                  type: string
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    LabelModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+              description: user id
+            name:
+              type: string
+            color:
+              type: string
+              example: '#000000'
+            font_color:
+              type: string
+              example: '#000000'
+            role:
+              type: string
+              example: admin
+            company:
+              type: string
+            periority:
+              type: number
+              example: 1000
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    FollowupModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+              description: user id
+            process:
+              type: string
+            content:
+              type: string
+            contact:
+              $ref: '#/components/schemas/Id'
+              description: contact id
+            shared_follow_up:
+              $ref: '#/components/schemas/Id'
+              description: shared followup id
+            task:
+              $ref: '#/components/schemas/Id'
+              description: task id
+            deal:
+              $ref: '#/components/schemas/Id'
+              description: deal id
+            comment:
+              type: string
+            reminder:
+              type: string
+            reminder_type:
+              type: string
+            set_recurrence:
+              type: boolean
+            set_auto_complete:
+              type: boolean
+            recurrence_mode:
+              type: string
+            assigned_contacts:
+              type: array
+              items:
+                $ref: '#/components/schemas/Id'
+            parent_follow_up:
+              $ref: '#/components/schemas/Id'
+              description: parent follow_up id
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    NoteModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+            content:
+              type: string
+            title:
+              type: string
+            contact:
+              $ref: '#/components/schemas/Id'
+              description: contact id
+            deal:
+              $ref: '#/components/schemas/Id'
+              description: deal id
+            team_cal:
+              $ref: '#/components/schemas/Id'
+              description: team_call id
+            shared_note:
+              $ref: '#/components/schemas/Id'
+              description: note id
+            has_shared:
+              type: boolean
+            assigned_contacts:
+              $ref: '#/components/schemas/Id'
+              description: contact id
+            audio:
+              type: string
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    TagModel:
+      required: null
+      allOf:
+        - type: object
+          properties:
+            _id:
+              $ref: '#/components/schemas/Id'
+            user:
+              $ref: '#/components/schemas/Id'
+              description: user id
+            tags:
+              type: array
+              items:
+                type: string
+            created_at:
+              $ref: '#/components/schemas/Datetime'
+            udpated_at:
+              $ref: '#/components/schemas/Datetime'
+    RespondSuccess:
+      type: object
+      description: 200 success
+      properties:
+        status:
+          type: boolean
+          example: true
+    RespondError:
+      type: object
+      description: Error
+      properties:
+        status:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: Invalid value
+    Respond401Error:
+      type: object
+      description: 401 Responsive
+      properties:
+        status:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            msg:
+              type: string
+              example: Invalid value
+            param:
+              type: string
+              example: password
+            location:
+              type: string
+              example: body
+  parameters:
+    id:
+      in: query
+      name: id
+      required: true
+      schema:
+        type: string
+        $ref: '#/components/schemas/Id'
+      description: Id
+    email:
+      in: query
+      name: email
+      required: true
+      schema:
+        $ref: '#/components/schemas/Email'
+      description: Email
+    name:
+      in: query
+      name: name
+      required: false
+      schema:
+        $ref: '#/components/schemas/Name'
+      description: User name
+    password:
+      in: query
+      name: password
+      required: true
+      schema:
+        type: string
+        description: Password
+        example: '*******'
+    url:
+      in: query
+      name: url
+      required: true
+      schema:
+        type: string
+        description: url
+        example: https://ecsbe.crmgrow.com/api/outbound/xxxxxx
+    action:
+      in: query
+      name: action
+      required: true
+      schema:
+        $ref: '#/components/schemas/Action'
+      description: action
+    zapier_id:
+      in: query
+      name: id
+      required: true
+      schema:
+        type: string
+        $ref: '#/components/schemas/ZapierId'
+      description: Zapier id

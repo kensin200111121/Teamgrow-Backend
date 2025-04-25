@@ -1,0 +1,8 @@
+@teamgrow:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=$GIT_TOKEN
+
+arch=x64
+platform=linux
+sharp_binary_host=https://npmmirror.com/mirrors/sharp
+sharp_libvips_binary_host=https://github.com/lovell/sharp-libvips/releases/download
+build_from_source=true

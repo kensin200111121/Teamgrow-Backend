@@ -1,0 +1,17 @@
+type: string
+enum:
+  - add_contact
+  - update_contact
+  - delete_contact
+  - add_deal
+  - move_deal
+  - send_material
+  - watch_material
+  - assigned_automation
+  - create_note
+  - update_note
+  - delete_note
+  - create_task
+  - update_task
+  - delete_task
+description: action

@@ -1,0 +1,3 @@
+type: boolean
+description: status
+example: true

@@ -1,0 +1,71 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::013236793350:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "dnsSearchDomains": null,
+        "environmentFiles": null,
+        "entryPoint": null,
+        "portMappings": [
+          {
+            "hostPort": 3000,
+            "protocol": "tcp",
+            "containerPort": 3000
+          }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "backend_admin",
+                "awslogs-region": "us-east-2",
+                "awslogs-stream-prefix": "backend_admin"
+            }
+        },
+        "command": null,
+        "linuxParameters": null,
+        "cpu": 0,
+        "environment": [],
+        "resourceRequirements": null,
+        "ulimits": null,
+        "dnsServers": null,
+        "mountPoints": [],
+        "workingDirectory": null,
+        "secrets": null,
+        "dockerSecurityOptions": null,
+        "memory": null,
+        "memoryReservation": null,
+        "volumesFrom": [],
+        "stopTimeout": null,
+        "image": "013236793350.dkr.ecr.us-east-2.amazonaws.com/crmg-webapi-stage:latest",
+        "startTimeout": null,
+        "firelensConfiguration": null,
+        "dependsOn": null,
+        "disableNetworking": null,
+        "interactive": null,
+        "healthCheck": null,
+        "essential": true,
+        "links": null,
+        "hostname": null,
+        "extraHosts": null,
+        "pseudoTerminal": null,
+        "user": null,
+        "readonlyRootFilesystem": null,
+        "dockerLabels": null,
+        "systemControls": null,
+        "privileged": null,
+        "name": "crmg-webapi-stage"
+      }
+    ],
+    "placementConstraints": [],
+    "memory": "1024",
+    "taskRoleArn": "arn:aws:iam::013236793350:role/ecsTaskExecutionRole",
+    "family": "crmg-webapi-stage",
+    "pidMode": null,
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "cpu": "512",
+    "proxyConfiguration": null
+  }

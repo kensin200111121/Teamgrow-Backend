@@ -1,0 +1,35 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+      content:
+        type: string
+      title:
+        type: string
+      contact:
+        $ref: '#/components/schemas/Id'
+        description: contact id
+      deal:
+        $ref: '#/components/schemas/Id'
+        description: deal id
+      team_cal:
+        $ref: '#/components/schemas/Id'
+        description: team_call id
+      shared_note:
+        $ref: '#/components/schemas/Id'
+        description: note id        
+      has_shared:
+        type: boolean
+      assigned_contacts:
+        $ref: '#/components/schemas/Id'
+        description: contact id        
+      audio:
+        type: string
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

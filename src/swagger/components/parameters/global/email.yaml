@@ -1,0 +1,6 @@
+in: query
+name: email
+required: true
+schema:
+  $ref: '#/components/schemas/Email'
+description: Email

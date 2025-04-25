@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed Invoice Info Confirmation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .normal-text {
+            height: 30px;
+            color: black;
+            font-family: Arial;
+            font-size: 16px;
+            letter-spacing: 0;
+            line-height: 25px;
+            opacity: 0.9;
+        }
+        .normal-text a {
+            font-size: 16px;
+            text-decoration: underline;
+            color:#1155CC
+        }
+        .normal-text .italic{
+            font-style: italic;
+            font-weight: bold;
+        }   
+        .normal-text .bu{
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .big-text {
+            height: 30px;
+            color: black;
+            font-family: Arial;
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 25px;
+            font-weight: bold;
+        }                        
+        .email-container {
+            max-width: 800px;
+            table-layout: fixed;
+        }
+        .invite-user {
+            height: 30px;
+            opacity: 0.64;
+            color: #101336;
+            font-family: Arial;
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 30px;
+        }
+        .invite-time {
+            height: 30px;
+            opacity: 0.64;
+            color: #101336;
+            font-family: 'Arial';
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 30px;
+        }
+        .notification-title {
+            padding-bottom: 25px;
+            color: #101336;
+            font-family: Arial;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 30px;
+        }
+        .notification-body {
+            border: 2px solid #D10058;
+            border-radius: 6px;
+            background-color:rgba(209,0,88,0.05);
+        }
+        .icon-times {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #D10058;
+        }
+        i.fa-times {
+            font-size: 20px;
+            color: #ffffff;
+            padding-top: 5px;
+        }
+        .payment-status {
+            width: 295px;
+            display: inline-block;
+            color: #D10058;
+            font-family: Arial;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 28px;
+            padding-left: 5px;
+        }
+        .payment-info-title {
+            color: #000000;
+            font-family: Arial;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 28px;
+            padding-top: 30px;
+        }
+        .payment-info-sub-title {
+            opacity: 0.5;
+            color: #101336;
+            font-family: 'Nunito';
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0;
+            line-height: 22px;
+            padding-top: 15px;
+        }
+        .payment-info-sub-body {
+            color: #101336;
+            font-family: 'Nunito';
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 32px;
+        }
+        .description {
+            color: #101336;
+            font-family: 'Nunito';
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 32px;
+            margin-top: 40px;
+        }
+        .support {
+            color: #101336;
+            font-family: 'Nunito';
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+        p {
+            margin: 0;
+        }
+        .footer-text {
+            color: #101336!important;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 22px;
+        }
+        .btn-redirect {
+            background-color: #ffffff;
+            border: 1px solid #0000ff;
+            border-radius: 3px;
+            color: #0000ff;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .td-facebook {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #eaeaf0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 15px 0 5px;
+        }
+        .btn-facebook {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding-top: 6px;
+        }
+        .footer-terms {
+            color: #0000ff;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 22px;
+            padding: 0 8px;
+            border-left: 1px solid #eaeaf0;
+            border-right: 1px solid #eaeaf0;
+            margin: 0 8px;
+        }
+        p {
+            margin: 0;
+        }
+        a {
+            color: #0000ff;
+            font-size: 14px;
+            height: 30px;
+            font-family: 'Arial';
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 22px;
+            text-decoration: none;
+        }
+        hr {
+            border: 1px solid #eaeaf0;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body bgcolor="#f8f8fd" style="margin: 0;">
+    <table class="email-container" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding-top: 56px; padding-bottom: 40px;">
+                                    <img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/crmgrow-logo-40px.png" width="228" height="37" alt="logo">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 50px; padding-right: 50px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding-bottom: 10px;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="invite-user">
+                                                                    <span>
+                                                                        {{user_name}},
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="description">
+                                                    <span>This email informs you that your credit card on file with crmgrow was declined.</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="notification-body">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td align="center" style="padding-top: 30px; padding-bottom: 30px;">
+                                                                    <p style="display: flex; align-items: center; justify-content: center;">
+                                                                        <span class="icon-times">
+                                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                                        </span>
+                                                                        <span class="payment-status">Your monthly payment has failed. Credit card was denied!</span>
+                                                                    </p>
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="payment-info-title">Allocation</td>
+                                                                <td class="payment-info-title">Payment information</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="payment-info-sub-title">AMOUNT</td>
+                                                                <td class="payment-info-sub-title">FROM</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="payment-info-sub-body" style="font-weight: bold;">{{amount}}</td>
+                                                                <td class="payment-info-sub-body">Credit Card</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="payment-info-sub-title">CARD NUMBER</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="payment-info-sub-body">****{{last_4_cc}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="big-text" style="padding-top: 20px;">
+                                                    <span class="underline">
+                                                        Important information.
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="normal-text">
+                                                    <ul>
+                                                        <li>We will attempt to bill the credit card you have on file with us again in approximately three (3) business days.
+                                                        </li>
+                                                        <li>
+                                                            Please log in to your crmgrow account and manually update the credit card information. 
+
+                                                        </li>
+                                                            <ul>
+                                                                <li>
+                                                                    Support cannot input your confidential credit card details for you
+                                                                </li>
+                                                                <li>
+                                                                    You <span class="bu">MUST</span> update your credit card information; we cannot “run it again” manually.
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            Click here to learn what happens if an account is canceled.
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="big-text" style="padding-top: 20px;">
+                                                    <span class="underline">
+                                                        Update your credit card.
+
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="normal-text">
+                                                    <ul>
+                                                        <li>You may see a message similar to this when you attempt to log in:
+                                                            <ul>
+                                                                <li style="font-style: italic;">
+                                                                    "We could not charge your Visa ending in **** for your CRM GROW LLC subscription. Please update your billing information to continue your subscription."
+                                                                </li>
+                                                                <li>
+                                                                    Please log in to your crmgrow account and update your credit card information.
+
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://kb1.crmgrow.com/kb/guide/en/billing-overview-pCctfJiW2f/Steps/2585907">Click here</a> to learn how to update your credit card information.
+
+                                                        </li>
+                                                        <li>
+                                                            <a href="https://crmgrow.com/terms_of_service.html">Click here</a> to review crmgrow terms & conditions.
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>                                                                
+
+                                            <tr>
+                                                <td class="normal-text" style="padding-bottom: 30px;">
+                                                    <span class="big-text">Questions? </span>
+                                                    Please email us at <a href="mailto:support@crmgrow.com">support@crmgrow.com</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#f8f8fd" style="padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding-top: 40px">
+                                                                    <img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/crmgrow-logo-24px.png" width="142" height="23">
+                                                                </td>
+                                                                <td align="right" style="padding-top: 40px">
+                                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="footer-text" style="color: #0000ff;">
+                                                                                    Follow us on
+                                                                                </td>
+                                                                                <td class="td-facebook">
+                                                                                    <a class="btn-facebook" href="{{facebook_url}}" target="_blank"><img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/facebook.png"></a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a class="btn-redirect" href="{{login_url}}">
+                                                                                        Redirect to login
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="footer-text">
+                                                                    @ 2021 All rights reserved.
+                                                                </td>
+                                                                <td class="footer-link" align="right">
+                                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <a href="{{terms_url}}" class="footer-terms" style="color:#0000ff;">Terms & Conditions</a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="{{privacy_url}}" class="footer-terms" style="color:#0000ff;">Privacy Policy</a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="{{unsubscription_url}}" class="footer-text" style="opacity:0.5;font-size:12px;">Unsubscribe</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

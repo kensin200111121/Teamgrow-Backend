@@ -1,0 +1,107 @@
+/* eslint-disable no-proto */
+const mongoose = require('mongoose');
+
+const correct_contact = {
+  _id: mongoose.Types.ObjectId('63a44fcbb199d3535de01cce'),
+  last_name: '',
+  email: 'bluepine618@hotmail.com',
+  user: [mongoose.Types.ObjectId('5fd97ad994cf273d68a016da')],
+  shared_members: [],
+  shared_team: [],
+  secondary_email: '',
+  cell_phone: '+13125440641',
+  secondary_phone: '',
+  country: '',
+  tags: [],
+  rate_lock: false,
+  favorite: false,
+  first_name: 'bluepine618',
+  created_at: new Date('2022-12-22T12:38:35.101+0000'),
+  updated_at: new Date('2024-06-27T09:04:01.718+0000'),
+  __v: 0,
+  last_activity: mongoose.Types.ObjectId('6565fcc522a643e5a72b5b74'),
+  temp_rate: 2,
+  rate: 2,
+  updatedAt: new Date('2023-01-04T08:45:08.384+0000'),
+  additional_field: {
+    Name: 'hi',
+    form: '64b0239743e23ad98738f465',
+  },
+  texted_unsbcription_link: true,
+  automation_off: new Date('2023-11-15T15:59:30.041+0000'),
+};
+
+const miss_email_contact = {
+  _id: mongoose.Types.ObjectId('63a44fcbb199d3535de01cce'),
+  last_name: '',
+  email: null,
+  user: [mongoose.Types.ObjectId('5fd97ad994cf273d68a016da')],
+  shared_members: [],
+  shared_team: [],
+  secondary_email: '',
+  cell_phone: '+13125440641',
+  secondary_phone: '',
+  country: '',
+  tags: [],
+  rate_lock: false,
+  favorite: false,
+  first_name: 'bluepine618',
+  created_at: new Date('2022-12-22T12:38:35.101+0000'),
+  updated_at: new Date('2024-06-27T09:04:01.718+0000'),
+  __v: 0,
+  last_activity: mongoose.Types.ObjectId('6565fcc522a643e5a72b5b74'),
+  temp_rate: 2,
+  rate: 2,
+  updatedAt: new Date('2023-01-04T08:45:08.384+0000'),
+  additional_field: {
+    Name: 'hi',
+    form: '64b0239743e23ad98738f465',
+  },
+  texted_unsbcription_link: true,
+  automation_off: new Date('2023-11-15T15:59:30.041+0000'),
+};
+
+const unsubscribed_contact = {
+  _id: mongoose.Types.ObjectId('63a44fcbb199d3535de01cce'),
+  last_name: '',
+  email: 'bluepine618@hotmail.com',
+  user: [mongoose.Types.ObjectId('5fd97ad994cf273d68a016da')],
+  shared_members: [],
+  shared_team: [],
+  secondary_email: '',
+  cell_phone: '+13125440641',
+  secondary_phone: '',
+  country: '',
+  tags: [],
+  rate_lock: false,
+  favorite: false,
+  first_name: 'bluepine618',
+  created_at: new Date('2022-12-22T12:38:35.101+0000'),
+  updated_at: new Date('2024-06-27T09:04:01.718+0000'),
+  __v: 0,
+  last_activity: mongoose.Types.ObjectId('6565fcc522a643e5a72b5b74'),
+  temp_rate: 2,
+  rate: 2,
+  updatedAt: new Date('2023-01-04T08:45:08.384+0000'),
+  additional_field: {
+    Name: 'hi',
+    form: '64b0239743e23ad98738f465',
+  },
+  texted_unsbcription_link: true,
+  automation_off: new Date('2023-11-15T15:59:30.041+0000'),
+  unsubscribed: {
+    email: true,
+    text: false,
+  },
+};
+
+const scheduler_contact = {
+  email: 'wu@crmgrow.com',
+  user: mongoose.Types.ObjectId('654131f8e9a7318ee9b3a777'),
+};
+module.exports = {
+  correct_contact,
+  miss_email_contact,
+  unsubscribed_contact,
+  scheduler_contact,
+};

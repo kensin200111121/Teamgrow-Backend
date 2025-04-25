@@ -1,0 +1,60 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      original_id:
+        $ref: '#/components/schemas/Id'
+      team_id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+      title:
+        type: string
+      preview:
+        type: string
+      description:
+        type: string
+      type:
+        type: string
+      key:
+        type: array
+        items:
+          type: string
+      company:
+        type: string
+      role:
+        type: string
+        example: admin
+      url:
+        type: array
+        items:
+          $ref: '#/components/schemas/Url' 
+      priority:
+        type: number
+        example: 1000
+      material_theme:
+        type: string
+      enabled_capture:
+        type: boolean
+      default_edited:
+        type: boolean
+      has_shared:
+        type: boolean
+      is_sharable: 
+        type: boolean      
+      is_download:
+        type: boolean
+      default_image:
+        $ref: '#/components/schemas/Id'
+        description: image id
+      shared_image:
+        $ref: '#/components/schemas/Id'
+        description: image id       
+      del:
+        type: boolean
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

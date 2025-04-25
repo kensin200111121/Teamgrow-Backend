@@ -1,0 +1,91 @@
+post:
+  tags: [ Inbound APIs ]
+  summary: Create Contact
+  description: |
+    Add a Contact into CRMGrow account.
+  security:
+    - crmgAuthorization: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/ContactModel'
+  responses:
+    '200':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/Status'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Respond401Error'
+
+get:
+  tags: [ Inbound APIs ]
+  summary: Get Contact
+  description: |
+    Get contact
+  security:
+    - crmgAuthorization: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/Id'
+  responses:
+    '200':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/Status'
+              data:
+                $ref: '#/components/schemas/ContactModel'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Respond401Error'
+
+put:
+  tags: [ Inbound APIs ]
+  summary: Update Contact
+  description: |
+    Update a Contact into CRMGrow account.
+  security:
+    - crmgAuthorization: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              $ref: '#/components/schemas/ContactModel'
+  responses:
+    '200':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/Status'    

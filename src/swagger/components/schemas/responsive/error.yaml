@@ -1,0 +1,9 @@
+type: object
+description: Error
+properties:
+    status: 
+      type: boolean
+      example: false
+    error: 
+      type: string
+      example: "Invalid value"

@@ -1,0 +1,7 @@
+in: query
+name: url
+required: true
+schema:
+  type: string
+  description: url
+  example: "https://ecsbe.crmgrow.com/api/outbound/xxxxxx"

@@ -1,0 +1,67 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      original_id:
+        $ref: '#/components/schemas/Id'
+      parent_id:
+        $ref: '#/components/schemas/Id'
+      title:
+        type: string
+      company:
+        type: string
+      automations:
+        type: array
+        items:
+          type: string
+      type:
+        type: string        
+        example: contact
+      label:
+        type: string
+        example: contact          
+      role:
+        type: string        
+      is_sharable:
+        type: boolean
+      del:
+        type: boolean
+      status:
+        type: boolean
+        example: 'completed'
+      appointment:
+        $ref: '#/components/schemas/Id'
+        description: appointment id
+      meta: 
+        type: object
+        properties:
+          action_count: 
+            type: number
+          videos:
+            type: array
+            items:
+              $ref: '#/components/schemas/Id'
+              description: video id
+          pdfs:
+            type: array
+            items:
+              $ref: '#/components/schemas/Id'
+              description: pdf id
+          images:
+            type: array
+            items:
+              $ref: '#/components/schemas/Id'
+              description: image id
+              videos:
+            has_email_action:
+              type: boolean
+            has_text_action:
+              type: boolean
+            has_child_automation:
+              type: boolean
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

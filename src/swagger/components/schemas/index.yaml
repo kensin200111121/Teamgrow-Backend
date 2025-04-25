@@ -1,0 +1,54 @@
+Id:
+  $ref: ./global/Id.yaml
+Name:
+  $ref: ./global/Name.yaml
+Email:
+  $ref: ./global/Email.yaml
+Status:
+  $ref: ./global/status.yaml
+Token:
+  $ref: ./global/token.yaml
+Salt:
+  $ref: ./global/salt.yaml
+Hash:
+  $ref: ./global/hash.yaml
+Cellphone:
+  $ref: ./global/cellphone.yaml
+Datetime:
+  $ref: ./global/datetime.yaml
+Url:
+  $ref: ./global/url.yaml
+Action:
+  $ref: ./global/action.yaml
+ZapierId:
+  $ref: ./global/zapier_id.yaml
+
+# Contact
+ContactModel:
+  $ref: ./model/contact.yaml
+VideoModel:
+  $ref: ./model/video.yaml
+PdfModel:
+  $ref: ./model/pdf.yaml
+ImageModel:
+  $ref: ./model/image.yaml
+AutomationModel:
+  $ref: ./model/automation.yaml
+TemplateModel:
+  $ref: ./model/template.yaml
+LabelModel:
+  $ref: ./model/label.yaml
+FollowupModel:
+  $ref: ./model/followup.yaml
+NoteModel:
+  $ref: ./model/note.yaml  
+TagModel:
+  $ref: ./model/tag.yaml
+
+#Error
+RespondSuccess:
+  $ref: ./responsive/success.yaml
+RespondError:
+  $ref: ./responsive/error.yaml
+Respond401Error:
+  $ref: ./responsive/401.yaml

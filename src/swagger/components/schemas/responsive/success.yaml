@@ -1,0 +1,6 @@
+type: object
+description: 200 success
+properties:
+    status: 
+      type: boolean
+      example: true

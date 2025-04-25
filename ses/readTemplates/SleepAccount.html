@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Mode Account Status Confirmation</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .email-container {
+            max-width: 800px;
+            table-layout: fixed;
+        }
+        .normal-text {
+            height: 30px;
+            color: black;
+            font-family: Arial;
+            font-size: 16px;
+            letter-spacing: 0;
+            line-height: 25px;
+            opacity: 0.9;
+        }
+        .normal-text a {
+            font-size: 16px;
+            text-decoration: underline;
+            color:#1155CC
+        }
+        .normal-text .italic{
+            font-style: italic;
+            font-weight: bold;
+        }
+        .big-text {
+            height: 30px;
+            color: black;
+            font-family: Arial;
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 25px;
+            font-weight: bold;
+        }
+        .big-text .underline{
+            text-decoration: underline;
+        }        
+        .support {
+            color: #101336;
+            font-family: 'Nunito';
+            font-size: 18px;
+            letter-spacing: 0;
+            line-height: 32px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+        p {
+            margin: 0;
+        }
+        .footer-text {
+            color: #101336!important;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 22px;
+        }
+        .btn-redirect {
+            background-color: #ffffff;
+            border: 1px solid #0000ff;
+            border-radius: 3px;
+            color: #0000ff;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .td-facebook {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #eaeaf0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 15px 0 5px;
+        }
+        .btn-facebook {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding-top: 6px;
+        }
+        .footer-terms {
+            color: #0000ff;
+            font-family: 'Nunito';
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0;
+            line-height: 22px;
+            padding: 0 8px;
+            border-left: 1px solid #eaeaf0;
+            border-right: 1px solid #eaeaf0;
+            margin: 0 8px;
+        }
+        p {
+            margin: 0;
+        }
+        a {
+            color: #0000ff;
+            font-size: 14px;
+            height: 30px;
+            font-family: 'Arial';
+            font-size: 14px;
+            letter-spacing: 0;
+            line-height: 22px;
+            text-decoration: none;
+        }
+        hr {
+            border: 1px solid #eaeaf0;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body bgcolor="#f8f8fd" style="margin: 0;">
+    <table class="email-container" align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="padding-top: 56px; padding-bottom: 40px;">
+                                    <img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/crmgrow-logo-40px.png" width="228" height="37" alt="logo">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 50px; padding-right: 50px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="normal-text" style="padding-bottom: 10px;">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="invite-user">
+                                                                                <span>
+                                                                                    {{user_name}},
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="normal-text" style="padding-top: 20px;">Thank you for choosing to use our Sleep Mode for your crmgrow account. Below are details about what happens during Sleep Mode and any third-party apps you may have added, like the Wavv Dialer.
+                                                                </td>
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="big-text" style="padding-top: 20px;">
+                                                                    <span class="underline">Important Details</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="normal-text">
+                                                                    <ul>
+                                                                        <li>
+                                                                            The Sleep Mode option will bill each month to maintain the Sleep Mode status of your crmgrow account.
+                                                                        </li>
+                                                                        <li>
+                                                                            If billing fails, we will contact you by email asking you to update your credit card information.
+                                                                            <ul>
+                                                                                <li>
+                                                                                    You will receive information on how to make that update on that email.
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li>
+                                                                            When you are ready to “wake up” your crmgrow account, and remove Sleep Mode;	
+                                                                            <ul>
+                                                                                <li>
+                                                                                    Log into your account with crmgrow at <a href="https://app.crmgrow.com/">https://app.crmgrow.com/</a>
+                                                                                </li>
+                                                                                <li>
+                                                                                    Click on your name at the top right of the dashboard
+                                                                                </li>
+                                                                                <li>
+                                                                                    Click on My Profile
+                                                                                </li>
+                                                                                <li>
+                                                                                    Click on the Subscription tab
+                                                                                </li>
+                                                                                <li>
+                                                                                    Choose your plan and confirm it
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+                                                                        <li>
+                                                                            If you have subscribed to any third-party apps, such as the Wavv Dialer click-to-call, single-line dialer, or multi-line dialer, they will continue to be billed.
+                                                                            <ul>
+                                                                                <li>
+                                                                                    Click here >>> <a href="https://kb1.crmgrow.com/kb/guide/en/dialer-account-information-and-billing-gA6h9aDX18/Steps/1285594">Dialer Account Information and Billing</a> to learn how to cancel the Wavv Dialer while you are in sleep mode.
+                                                                                </li>
+                                                                                <li>
+                                                                                    If you cancel a third-party service while your crmgrow account is in sleep mode, you must add it back once you are active again.
+                                                                                </li>
+                                                                                <li>
+                                                                                    If you have previously had the Wave Dialer with crmgrow, you will not be eligible to receive the two-week trial again.
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
+
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="normal-text" style="padding-bottom: 60px;">
+                                                                    <span class="big-text">Questions? </span>
+                                                                    Please email us at <a href="mailto:support@crmgrow.com">support@crmgrow.com</a>
+                                                                </td>
+                                                            </tr>   
+                                                            <tr>
+                                                                <td class="normal-text">
+                                                                    <ul>
+                                                                        <li>
+                                                                            <a href="https://crmgrow.com/terms_of_service.html">Click here</a> to review crmgrow terms & conditions.
+                                                                        </li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>                                                     
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#f8f8fd" style="padding-left: 50px; padding-right: 50px; padding-bottom: 50px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding-top: 40px">
+                                                                    <img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/crmgrow-logo-24px.png" width="142" height="23">
+                                                                </td>
+                                                                <td align="right" style="padding-top: 40px">
+                                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="footer-text" style="color: #0000ff;">
+                                                                                    Follow us on
+                                                                                </td>
+                                                                                <td class="td-facebook">
+                                                                                    <a class="btn-facebook" href="{{facebook_url}}" target="_blank"><img src="https://teamgrow.s3.us-east-2.amazonaws.com/ses/facebook.png"></a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a class="btn-redirect" href="{{login_url}}">
+                                                                                        Redirect to login
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <hr />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="footer-text">
+                                                                    @ 2021 All rights reserved.
+                                                                </td>
+                                                                <td class="footer-link" align="right">
+                                                                    <table border="0" cellpadding="0" cellspacing="0">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <a href="{{terms_url}}" class="footer-terms" style="color:#0000ff;">Terms & Conditions</a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="{{privacy_url}}" class="footer-terms" style="color:#0000ff;">Privacy Policy</a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="{{unsubscription_url}}" class="footer-text" style="opacity:0.5;font-size:12px;">Unsubscribe</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

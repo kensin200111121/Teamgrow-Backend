@@ -1,0 +1,24 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      first_name:
+        $ref: '#/components/schemas/Name'
+      last_name:
+        $ref: '#/components/schemas/Name'
+      email:
+        $ref: '#/components/schemas/Email'
+      user:
+        $ref: '#/components/schemas/Id'
+        description: user id
+      shared_memebers:
+        type: array
+        items: 
+          $ref: '#/components/schemas/Id'
+        description: array of user id      
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

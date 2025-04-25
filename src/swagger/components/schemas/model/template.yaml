@@ -1,0 +1,55 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      original_id:
+        $ref: '#/components/schemas/Id'
+      team_id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+      title:
+        type: string
+      subject:
+        type: string
+      content:
+        type: string
+      role:
+        type: string
+      company:
+        type: string
+      video_ids:
+        type: array
+        items:
+          $ref: '#/components/schemas/Id'
+      pdf_ids:
+        type: array
+        items:
+          $ref: '#/components/schemas/Id'
+      image_ids:
+        type: array
+        items:
+          $ref: '#/components/schemas/Id'
+      type:
+        type: string
+      default:
+        type: boolean
+      is_sharable:
+        type: boolean
+      del:
+        type: boolean
+      category:
+        type: string
+      attachments:      
+        type: array
+      meta:
+        type: object
+        properties:
+          excerpt:
+            type: string        
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

@@ -1,0 +1,271 @@
+const mongoose = require('mongoose');
+
+const Schema = mongoose.Schema;
+const system_settings = require('../configs/system_settings');
+const { TEAM_DEFAULT_SETTINGS } = require('../constants/user');
+
+const GarbageSchema = new Schema(
+  {
+    user: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
+    canned_message: {
+      sms: { type: mongoose.Schema.Types.ObjectId, ref: 'email_template' },
+      email: { type: mongoose.Schema.Types.ObjectId, ref: 'email_template' },
+    },
+    edited_video: [{ type: mongoose.Schema.Types.ObjectId, ref: 'video' }],
+    edited_pdf: [{ type: mongoose.Schema.Types.ObjectId, ref: 'pdf' }],
+    edited_image: [{ type: mongoose.Schema.Types.ObjectId, ref: 'image' }],
+    edited_automation: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'automation' },
+    ],
+    edited_label: [{ type: mongoose.Schema.Types.ObjectId, ref: 'label' }],
+    desktop_notification: {
+      material: { type: Boolean, default: false },
+      text_replied: { type: Boolean, default: true },
+      email: { type: Boolean, default: false },
+      link_clicked: { type: Boolean, default: false },
+      follow_up: { type: Boolean, default: false },
+      lead_capture: { type: Boolean, default: false },
+      unsubscription: { type: Boolean, default: false },
+      resubscription: { type: Boolean, default: false },
+      reminder_scheduler: { type: Boolean, default: false },
+    },
+    email_notification: {
+      material: { type: Boolean, default: true },
+      text_replied: { type: Boolean, default: true },
+      email: { type: Boolean, default: true },
+      link_clicked: { type: Boolean, default: true },
+      follow_up: { type: Boolean, default: true },
+      lead_capture: { type: Boolean, default: false },
+      unsubscription: { type: Boolean, default: true },
+      resubscription: { type: Boolean, default: true },
+      reminder_scheduler: { type: Boolean, default: false },
+    },
+    mobile_notification: {
+      material: { type: Boolean, default: true },
+      text_replied: { type: Boolean, default: false },
+      email: { type: Boolean, default: true },
+      link_clicked: { type: Boolean, default: true },
+      follow_up: { type: Boolean, default: true },
+      lead_capture: { type: Boolean, default: false },
+      unsubscription: { type: Boolean, default: true },
+      resubscription: { type: Boolean, default: true },
+      reminder_scheduler: { type: Boolean, default: false },
+    },
+    zapier: Object,
+    text_notification: {
+      material: { type: Boolean, default: true },
+      text_replied: { type: Boolean, default: false },
+      email: { type: Boolean, default: false },
+      link_clicked: { type: Boolean, default: false },
+      follow_up: { type: Boolean, default: false },
+      lead_capture: { type: Boolean, default: false },
+      unsubscription: { type: Boolean, default: false },
+      resubscription: { type: Boolean, default: false },
+      reminder_scheduler: { type: Boolean, default: false },
+    },
+    reminder_before: { type: Number, default: 30 },
+    reminder_scheduler: { type: Number, default: 30 },
+    capture_dialog: { type: Boolean, default: false },
+    capture_delay: { type: Number, default: 0 },
+    capture_videos: { type: Array, default: [] },
+    capture_images: { type: Array, default: [] },
+    capture_pdfs: { type: Array, default: [] },
+    capture_form: { type: String, default: 'default' },
+    capture_forms: { type: Object, default: {} },
+    capture_field: {
+      type: Object,
+      default: {
+        default: {
+          name: 'Simple Form',
+          fields: [
+            {
+              required: true,
+              name: 'First Name',
+              type: 'text',
+              placeholder: '',
+            },
+            {
+              required: true,
+              name: 'Last Name',
+              type: 'text',
+              placeholder: '',
+            },
+            {
+              required: true,
+              name: 'Email',
+              type: 'email',
+              placeholder: '',
+            },
+            {
+              required: false,
+              name: 'Phone',
+              type: 'phone',
+              placeholder: '',
+            },
+          ],
+          tags: [],
+          automation: '',
+          capture_delay: 0,
+          capture_video: '',
+        },
+      },
+    },
+    index_page: { type: mongoose.Schema.Types.ObjectId, ref: 'page' },
+    logo: { type: String },
+    material_theme: { type: String, default: 'theme2' },
+    auto_follow_up: {
+      enabled: { type: Boolean, default: false },
+      period: { type: Number, default: 0 },
+      content: { type: String, default: system_settings.AUTO_FOLLOW_UP },
+    },
+    auto_resend: {
+      enabled: { type: Boolean, default: false },
+      period: { type: Number, default: 24 },
+      sms_canned_message: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'email_template',
+      },
+      email_canned_message: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'email_template',
+      },
+    },
+    auto_follow_up2: {
+      enabled: { type: Boolean, default: false },
+      period: { type: Number, default: 0 },
+      content: { type: String, default: system_settings.AUTO_FOLLOW_UP },
+    },
+    auto_resend2: {
+      enabled: { type: Boolean, default: false },
+      period: { type: Number, default: 24 },
+      sms_canned_message: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'email_template',
+      },
+      email_canned_message: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'email_template',
+      },
+    },
+    tag_automation: Object,
+    material_themes: { type: Object },
+    access_token: String,
+    api_key: String,
+    highlights: { type: Array, default: [] },
+    brands: { type: Array, default: [] },
+    intro_video: { type: String },
+    additional_fields: { type: Array, default: [] },
+    template_tokens: { type: Array, default: [] },
+    onboarding_status: {
+      email: {
+        type: String,
+        enum: ['pending', 'skipped', 'completed'],
+        default: 'pending',
+      },
+      calendar: {
+        type: String,
+        enum: ['pending', 'skipped', 'completed'],
+        default: 'pending',
+      },
+      contacts: {
+        type: String,
+        enum: ['pending', 'skipped', 'completed'],
+        default: 'pending',
+      },
+      dialer: {
+        type: String,
+        enum: ['pending', 'skipped', 'completed'],
+        default: 'pending',
+      },
+    },
+    calendar_info: {
+      is_enabled: { type: Boolean, default: false },
+      start_time: String,
+      end_time: String,
+    },
+    calendly: {
+      id: String,
+      token: String,
+      email: String,
+      link: String,
+      organization: String,
+      user_uri: String,
+      scheduling_url: String,
+      timezone: String,
+    },
+    zoom: { type: String },
+    smart_codes: Object,
+    // campaign smtp information
+    smtp_info: {
+      host: String,
+      user: String,
+      pass: String,
+      secure: Boolean,
+      port: Number,
+      email: String,
+      smtp_connected: Boolean,
+      verification_code: String,
+      daily_limit: Number,
+      start_time: String,
+      end_time: String,
+      business_day: {
+        sun: { type: Boolean, default: false },
+        mon: { type: Boolean, default: true },
+        tue: { type: Boolean, default: true },
+        wed: { type: Boolean, default: true },
+        thu: { type: Boolean, default: true },
+        fri: { type: Boolean, default: true },
+        sat: { type: Boolean, default: false },
+      },
+    },
+    business_time: {
+      is_enabled: { type: Boolean, default: true },
+      start_time: { type: String, default: '08:00:00.000' },
+      end_time: { type: String, default: '20:00:00.000' },
+      enabled_days: { type: Array },
+      timezone: { type: String },
+    },
+    business_day: {
+      sun: { type: Boolean, default: false },
+      mon: { type: Boolean, default: true },
+      tue: { type: Boolean, default: true },
+      wed: { type: Boolean, default: true },
+      thu: { type: Boolean, default: true },
+      fri: { type: Boolean, default: true },
+      sat: { type: Boolean, default: false },
+    },
+    confirm_message: {
+      automation_business_hour: { type: Boolean, default: false },
+      email_out_of_business_hour: { type: Boolean, default: false },
+      email_mass_overflow: { type: Boolean, default: false },
+    },
+    read_notifications: [{ type: mongoose.Schema.Types.ObjectId }],
+    csv_templates: { type: Array, default: [] },
+    call_labels: [{ type: String }],
+    is_read: { type: Boolean },
+    twilio_sub_account: {
+      is_enabled: { type: Boolean, default: false },
+      sid: String,
+      auth_token: String,
+    },
+    twilio_brand_info: Object,
+    twilio_capacity: Number,
+    twilio_campaign_draft: {
+      description: String,
+      messages: { type: Array, default: [] },
+      messageFlow: String,
+    },
+    team_settings: { type: Array, default: TEAM_DEFAULT_SETTINGS },
+    created_at: Date,
+    updated_at: Date,
+    is_notification_read: { type: Boolean, default: false },
+  },
+  {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+  }
+);
+
+GarbageSchema.index({ user: 1, unique: true });
+const Garbage = mongoose.model('garbage', GarbageSchema);
+
+module.exports = Garbage;

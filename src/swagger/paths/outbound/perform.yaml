@@ -1,0 +1,19 @@
+get:
+  tags: [ Outbound APIs ]
+  summary: perform api
+  description: |
+    Enter the endpoint URL Zapier should check for recent items, to provide sample data in the Zap Editor. This request must return an array. Learn more. Required for public apps with a REST Hook trigger.
+  security:
+    - crmgAuthorization: []
+  parameters:
+    - $ref: '#/components/parameters/action'
+  responses:
+    '201':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/components/schemas/ContactModel'

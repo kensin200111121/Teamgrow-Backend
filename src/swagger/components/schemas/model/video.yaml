@@ -1,0 +1,32 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      user_name:
+        $ref: '#/components/schemas/Name'
+      team_id:
+        $ref: '#/components/schemas/Id'
+      title:
+        type: string
+      company:
+        type: string
+      description:
+        type: string
+      converted:
+        type: string
+      uploaded:
+        type: boolean
+        example: true          
+      duration:
+        type: number
+      role:
+        type: string
+        example: admin
+      url:
+        $ref: '#/components/schemas/Url' 
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

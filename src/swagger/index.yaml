@@ -1,0 +1,30 @@
+openapi: 3.1.0
+servers:
+  - url: /api
+info:
+  description: |
+    CRMGROW Inbound/Outbounad API 
+    we support the token to call APIs on settings/integration/Integreation/Zappier
+  version: 1.0.0
+  title: CRMGROW API
+  contact:
+    email: support@crmgrow.com
+tags:
+  - name: Inbound APIs
+    description: Inbound api for Zapier
+    tags:
+  - name: Outbound APIs
+    description: Outbound api for Zapier
+paths:
+  $ref: ./paths/index.yaml
+
+components:
+  securitySchemes:
+    crmgAuthorization:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: Authorization  # name of the header, query parameter or cookie
+  schemas:
+    $ref: ./components/schemas/index.yaml
+  parameters:
+    $ref: ./components/parameters/index.yaml

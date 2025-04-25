@@ -1,0 +1,35 @@
+post:
+  tags: [ Inbound APIs ]
+  summary: Send pdf
+  description: |
+    Send a pdf into CRMGrow account.
+  security:
+    - crmgAuthorization: []
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              $ref: '#/components/schemas/Email'
+            pdf_id:
+              $ref: '#/components/schemas/Id'
+            template_id:
+              $ref: '#/components/schemas/Id'
+  responses:
+    '200':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/Status'
+    '400':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RespondError'

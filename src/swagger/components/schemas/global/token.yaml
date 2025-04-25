@@ -1,0 +1,3 @@
+type: string
+description: Token
+example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTc0MjVkMTMwODc5MDAxYmFhYzE5NSIsImFwaV9sb2dnaW4iOnRydWUsImlhdCI6MTY5NTk1NzE3Nn0.ldG4ej6yO4eTwmd9ZhrlWqWlTtSG57qE-OIvOTBDXGo

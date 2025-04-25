@@ -1,0 +1,7 @@
+in: query
+name: id
+required: true
+schema:
+  type: string
+  $ref: '#/components/schemas/Id'
+description: Id

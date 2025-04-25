@@ -1,0 +1,17 @@
+get:
+  tags: [ Inbound APIs ]
+  summary: Get images
+  description: |
+    Get images
+  security:
+    - crmgAuthorization: []
+ 
+  responses:
+    '200':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ImageModel'

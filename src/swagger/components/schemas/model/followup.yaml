@@ -1,0 +1,48 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+        description: user id
+      process:
+        type: string
+      content:
+        type: string
+      contact:
+        $ref: '#/components/schemas/Id'
+        description: contact id
+      shared_follow_up:
+        $ref: '#/components/schemas/Id'
+        description: shared followup id
+      task:
+        $ref: '#/components/schemas/Id'
+        description: task id
+      deal:
+        $ref: '#/components/schemas/Id'
+        description: deal id          
+      comment:
+        type: string      
+      reminder:
+        type: string
+      reminder_type:
+        type: string
+      set_recurrence:
+        type: boolean 
+      set_auto_complete:
+        type: boolean
+      recurrence_mode:
+        type: string
+      assigned_contacts:
+        type: array
+        items:
+          $ref: '#/components/schemas/Id'
+      parent_follow_up:
+        $ref: '#/components/schemas/Id'
+        description: parent follow_up id     
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

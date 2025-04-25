@@ -1,0 +1,98 @@
+name: TeamGrow Build to ECR
+on:
+  push:
+    branches: [stage]
+
+jobs:
+  deploy_server:
+    name: Deploy Server
+    runs-on: ubuntu-latest
+    environment: stage
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: crmg-webapi-stage
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        aws s3 cp s3://cloudformation-teamgrow/ENV-stage ./.env
+        aws s3 cp s3://cloudformation-teamgrow/MAIN_BACKEND_NPM_CONFIG ./.npmrc
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: task-definition-stage.json
+        container-name: crmg-webapi-stage
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: crmg-webapi-stage
+        cluster: crmg-ecs-stage
+        wait-for-service-stability: true
+
+  deploy_cronjob:
+    name: Deploy Cronjob
+    environment: stage
+    runs-on: self-hosted
+    steps:
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.RUNNER_PRIVATE_KEY }}
+      - name: trigger deploy_cronjob_stage.py
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@3.139.190.87 'deploy_cronjob_stage.py'
+
+  run_db_migration:
+    name: Run DB migration
+    environment: stage
+    runs-on: self-hosted
+    steps:
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.RUNNER_PRIVATE_KEY }}
+      - name: trigger run_db_migration_stage.py
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@3.139.190.87 'run_db_migration_stage.py'
+
+  update_gitlab:
+    name: sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Push to GitLab
+        run: |
+          GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git remote add gitlab git@gitlab.com:greenseed/redx/vortex-parent/teamgrow/crm-server.git
+          GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" git push gitlab -f stage:stage

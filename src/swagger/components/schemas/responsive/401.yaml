@@ -1,0 +1,18 @@
+type: object
+description: 401 Responsive
+properties:
+    status: 
+      type: boolean
+      example: false
+    error: 
+      type: object
+      properties:
+        msg:
+          type: string
+          example: "Invalid value"
+        param:
+          type: string
+          example: "password"
+        location:
+          type: string
+          example: "body" 

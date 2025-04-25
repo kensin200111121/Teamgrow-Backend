@@ -1,0 +1,44 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      original_id:
+        $ref: '#/components/schemas/Name'
+      team_id:
+        $ref: '#/components/schemas/Id' 
+        description: team id
+      user:
+        $ref: '#/components/schemas/Id'
+        description: user id
+      title:
+        type: string
+      description:
+        type: string
+      preview:
+        type: string
+      type:
+        type: string
+      role:
+        type: string        
+      company:
+        type: string
+      key:
+        type: string
+      total_pages:
+        type: number
+      material_theme:
+        type: string
+      capture_form:
+        type: object
+      default_pdf:
+        $ref: '#/components/schemas/Id'
+      shared_pdf:
+        $ref: '#/components/schemas/Id'
+      view_mode:
+        type: string        
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'

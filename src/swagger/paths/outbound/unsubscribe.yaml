@@ -1,0 +1,19 @@
+delete:
+  tags: [ Outbound APIs ]
+  summary: unsubscribe api
+  description: |
+    Enter the endpoint URL to remove a webhook subscription.
+  security:
+    - crmgAuthorization: []
+  parameters:
+    - $ref: '#/components/parameters/zapier_id'
+  responses:
+    '201':
+      description: crmgrow log in successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/Status'

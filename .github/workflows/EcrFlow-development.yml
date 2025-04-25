@@ -1,0 +1,47 @@
+name: Trigger deployment of development on development server
+on:
+  push:
+    branches: [development]    
+    paths:
+      - 'src/**'
+      - 'bins/**'
+      - 'crons/**'
+      - 'migrations/**'
+      - 'app.js'
+jobs:
+  deploy_server:
+    name: Deploy Server
+    environment: development
+    runs-on: self-hosted
+    
+    steps:
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.RUNNER_PRIVATE_KEY }}
+      - name: Trigger deployment script
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@3.139.190.87 'deploy_server.py'
+
+  deploy_cronjob:
+    name: Deploy Cronjob
+    environment: development
+    runs-on: self-hosted
+    steps:
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.RUNNER_PRIVATE_KEY }}
+      - name: trigger deploy_cronjob.py
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@3.139.190.87 'deploy_cronjob.py'
+
+  run_db_migration:
+    name: Run DB migration
+    environment: development
+    runs-on: self-hosted
+    steps:
+      - name: Configure SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.RUNNER_PRIVATE_KEY }}
+      - name: trigger run_db_migration.py
+        run: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ubuntu@3.139.190.87 'run_db_migration.py'

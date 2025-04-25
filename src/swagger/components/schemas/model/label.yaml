@@ -1,0 +1,29 @@
+required:
+allOf:
+  - type: object
+    properties:
+      _id:
+        $ref: '#/components/schemas/Id'
+      user:
+        $ref: '#/components/schemas/Id'
+        description: user id
+      name:
+        type: string
+      color:
+        type: string
+        example: "#000000"
+      font_color:
+        type: string
+        example: "#000000"
+      role:
+        type: string
+        example: admin
+      company:
+        type: string
+      periority:
+        type: number
+        example: 1000
+      created_at:
+        $ref: '#/components/schemas/Datetime'
+      udpated_at:
+        $ref: '#/components/schemas/Datetime'
