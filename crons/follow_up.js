@@ -21,25 +21,17 @@ mongoose
 const task_reminder = new CronJob(
   '*/5 * * * 0-6',
   async () => {
-    const due_date = new Date();
+    const now = new Date();
+    const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
     const reminder_array = await FollowUp.find({
-      remind_at: { $exists: true, $lte: due_date },
       status: 0,
+      due_date: { $lte: oneHourLater },
     }).catch((err) => {
       console.log('followup find err', err.message);
     });
 
     for (let i = 0; i < reminder_array.length; i++) {
       const follow_up = reminder_array[i];
-      const user = await User.findOne({
-        _id: follow_up.user,
-        del: false,
-      }).catch((err) => {
-        console.log('err: ', err);
-      });
-      if (!user) {
-        continue;
-      }
       if (!follow_up.contact) {
         continue;
       }
@@ -57,6 +49,23 @@ const task_reminder = new CronJob(
       if (!contact) {
         continue;
       }
+
+      const garbage = await Garbage.findOne({ user: follow_up.user }).catch(
+        (err) => {
+          console.log(
+            `Garbage fetch error for ${follow_up.user}:`,
+            err.message
+          );
+        }
+      );
+
+      const reminder_before = garbage?.reminder_before || 30;
+      const remind_at = new Date(
+        follow_up.due_date.getTime() - reminder_before * 60000
+      );
+
+      if (remind_at > now) continue;
+
       let deal;
       if (follow_up.shared_follow_up) {
         const deal_follow_up = await FollowUp.findOne({
@@ -82,7 +91,7 @@ const task_reminder = new CronJob(
           task: follow_up,
           deal,
         },
-        userId: user._id,
+        userId: follow_up.user,
       });
 
       FollowUp.updateOne(
@@ -104,16 +113,6 @@ const task_reminder = new CronJob(
 
         if (!recurring_follow_up) {
           continue;
-        }
-
-        const garbage = await Garbage.findOne({
-          user: follow_up.user,
-        }).catch((err) => {
-          console.log('err', err);
-        });
-        let reminder_before = 30;
-        if (garbage) {
-          reminder_before = garbage.reminder_before;
         }
 
         let update_date;
@@ -175,10 +174,6 @@ const task_reminder = new CronJob(
               ...follow_up._doc,
               status: 0,
               due_date: update_date.clone(),
-              remind_at:
-                follow_up.deal || follow_up.is_full
-                  ? undefined
-                  : update_date.clone().subtract(reminder_before, 'minutes'),
             });
             new_follow_up.save().catch((err) => {
               console.log('new followup save err', err.message);
@@ -332,10 +327,6 @@ const monthly_task_recurrence_adjust = new CronJob(
             ...follow_up._doc,
             status: 0,
             due_date: update_date.clone(),
-            remind_at:
-              follow_up.deal || follow_up.is_full
-                ? undefined
-                : update_date.clone().subtract(reminder_before, 'minutes'),
           });
           new_follow_up.save().catch((err) => {
             console.log('new followup save err', err.message);

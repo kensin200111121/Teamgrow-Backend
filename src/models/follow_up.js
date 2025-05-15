@@ -27,7 +27,6 @@ const FollowUpSchema = new Schema(
     assigned_contacts: [
       { type: mongoose.Schema.Types.ObjectId, ref: 'contact' },
     ],
-    remind_at: Date,
     parent_follow_up: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'follow_up',
@@ -51,7 +50,6 @@ FollowUpSchema.index({ shared_follow_up: 1 });
 FollowUpSchema.index({ parent_follow_up: 1 });
 FollowUpSchema.index({ contact: 1 });
 FollowUpSchema.index({ deal: 1 });
-FollowUpSchema.index({ remind_at: 1 });
 const FollowUp = mongoose.model('follow_up', FollowUpSchema);
 
 module.exports = FollowUp;

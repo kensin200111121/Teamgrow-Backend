@@ -31,7 +31,6 @@ const createFollowup = async (data) => {
   }
 
   const startdate = moment(due_date);
-  const remind_at = startdate.subtract(reminder_before, 'minutes');
 
   let detail_content = 'added task';
   if (guest_loggin) {
@@ -49,7 +48,6 @@ const createFollowup = async (data) => {
       contact,
       set_recurrence,
       recurrence_mode,
-      remind_at,
       user,
       deal,
     });
@@ -173,7 +171,6 @@ const createDealFollowUp = async (
       is_full,
       recurrence_mode: set_recurrence ? recurrence_mode : undefined,
       due_date: set_recurrence ? undefined : due_date,
-      remind_at: undefined,
     });
     await deal_followup.save().catch((err) => {
       console.log('new follow up save err', err.message);
@@ -213,10 +210,6 @@ const createDealFollowUp = async (
         set_recurrence,
         recurrence_mode: set_recurrence ? recurrence_mode : undefined,
         due_date: set_recurrence ? undefined : due_date,
-        remind_at:
-          set_recurrence || is_full
-            ? undefined
-            : moment(due_date).clone().subtract(reminder_before, 'minutes'),
         is_full,
       });
       contact_followup.save().catch((err) => {
@@ -289,7 +282,6 @@ const createDealFollowUp = async (
             ...deal_followup._doc,
             _id: undefined,
             due_date: update_date.clone(),
-            remind_at: undefined,
             parent_follow_up: deal_followup._id,
           });
           await recurring_follow_up.save().catch((err) => {
@@ -314,9 +306,6 @@ const createDealFollowUp = async (
               set_recurrence,
               recurrence_mode: set_recurrence ? recurrence_mode : undefined,
               due_date: update_date.clone(),
-              remind_at: is_full
-                ? undefined
-                : update_date.clone().subtract(reminder_before, 'minutes'),
               parent_follow_up: contact_follow_ups[contact],
             });
             contact_followup.save().catch((err) => {

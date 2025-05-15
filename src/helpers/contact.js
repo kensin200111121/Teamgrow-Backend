@@ -132,7 +132,11 @@ const getLoadGroupActivity = async (
       },
     },
   ]).catch((_) => {});
-  const lastActivityId = allActivities.slice(-1)[0]?.['last'];
+
+  const lastActivityId = allActivities.reduce((min, item) => {
+    return !min || item.activity._id < min ? item.activity._id : min;
+  }, null);
+
   allActivities.forEach((e, index, array) => {
     if (e._id.assigner && Object.keys(e._id).length > 1) {
       if (!e._id.single_id) {

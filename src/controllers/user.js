@@ -1882,7 +1882,7 @@ const getMe = async (req, res) => {
       }).catch((err) => {
         console.log('user find err', err.message);
       });
-      user.text_info = mainUser.text_info;
+      user.text_info = mainUser?.text_info;
     }
     if (req.mode !== 'api') {
       // if (user.dialer_info && user.dialer_info.is_enabled) {
@@ -4649,25 +4649,26 @@ const removeSubAccount = async (req, res) => {
         const payment = await Payment({ _id: _user.payment }).catch((err) => {
           console.log('payment fine err', err.message);
         });
-
-        cancelSubscriptionHelper({ subscription: payment.subscription })
-          .then(() => {
-            User.updateOne(
-              {
-                _id: currentUser.id,
-              },
-              {
-                $pull: {
-                  sub_account_payments: currentUser.sub_account_payments[0],
+        if (payment) {
+          cancelSubscriptionHelper({ subscription: payment.subscription })
+            .then(() => {
+              User.updateOne(
+                {
+                  _id: currentUser.id,
                 },
-              }
-            ).catch((err) => {
-              console.log('user update err', err.message);
+                {
+                  $pull: {
+                    sub_account_payments: currentUser.sub_account_payments[0],
+                  },
+                }
+              ).catch((err) => {
+                console.log('user update err', err.message);
+              });
+            })
+            .catch((err) => {
+              console.log(err.message);
             });
-          })
-          .catch((err) => {
-            console.log(err.message);
-          });
+        }
       }
 
       suspendData(req.params.id);

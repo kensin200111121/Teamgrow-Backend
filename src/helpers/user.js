@@ -69,6 +69,7 @@ const { removeTimeline } = require('../services/time_line');
 const { getAllTokens, deleteTokenById } = require('../services/identity');
 const { AuthorizationCode } = require('simple-oauth2');
 const Organization = require('../models/organization');
+const CustomField = require('../models/custom_field');
 
 const ses = new SESClient({
   credentials: {
@@ -374,6 +375,7 @@ const suspendData = async (user_id) => {
       }
     );
   } else {
+    await migrateSubAccountInfo(currentUser._id);
     await Team.updateOne(
       { members: { $in: [currentUser._id] }, is_internal: true },
       { $pull: { members: currentUser._id, editors: currentUser._id } }
@@ -1227,7 +1229,6 @@ const createInternalTeam = async (currentUser, user) => {
       console.log('user community create error', err);
     });
   }
-
   await Team.updateOne(
     {
       _id: userTeam._id,
@@ -1583,6 +1584,22 @@ const saveDeviceToken = (user, os, player_id) => {
   });
 };
 
+const migrateSubAccountInfo = async (userId) => {
+  const team = await Team.findOne({ members: userId, is_internal: true }).catch(
+    (err) => console.log('not found team.')
+  );
+  if (!team) return;
+  const owner = team.owner[0];
+  await Contact.updateMany(
+    { user: userId, owner: userId },
+    { $set: { owner } }
+  );
+  await Contact.updateMany({ user: userId }, { $set: { user: owner } });
+  await Label.updateMany({ user: userId }, { $set: { user: owner } });
+  await Tag.updateMany({ user: userId }, { $set: { user: owner } });
+  await CustomField.updateMany({ user: userId }, { $set: { user: owner } });
+};
+
 module.exports = {
   createUser,
   cleanupUserData,
@@ -1618,4 +1635,5 @@ module.exports = {
   getUserOrganization,
   createOrganizationAndInternalTeam,
   checkRecaptchaToken,
+  migrateSubAccountInfo,
 };

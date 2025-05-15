@@ -13,6 +13,7 @@ const CustomFieldSchema = new Schema(
     kind: { type: String, default: 'contact' },
     options: { type: Array, default: [] },
     order: { type: Number, default: 0 },
+    organization: { type: mongoose.Schema.Types.ObjectId, ref: 'organization' },
     created_at: Date,
     updated_at: Date,
   },

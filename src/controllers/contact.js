@@ -493,13 +493,13 @@ const getDetail = async (req, res) => {
       member._id.equals(currentUser._id)
     ) ||
     _contact.pending_users.includes(currentUser._id) ||
-    _contact.owner.equals(currentUser._id);
+    (_contact.owner && _contact.owner.equals(currentUser._id));
 
   if (!userExists) {
     const _team = await Team.findOne({ _id: _contact.shared_team });
     if (_team) {
       userExists = _team.members.some((member) =>
-        member._id.equals(currentUser._id)
+        member.equals(currentUser._id)
       );
     }
   }
@@ -879,11 +879,18 @@ const update = async (req, res) => {
   if (req.body.tags && typeof req.body.tags === 'string')
     req.body.tags = req.body.tags.split(',');
 
-  if (!req.body.owner || !mongoose.Types.ObjectId.isValid(req.body.owner)) {
-    delete req.body.owner;
+  const query = { ...req.body };
+  const unsetQuery = {};
+  
+  if (!query.owner || !mongoose.Types.ObjectId.isValid(query.owner)) {
+    delete query.owner;
+    unsetQuery.owner = "";
   }
 
-  const query = { ...req.body };
+  if (!query.label || !mongoose.Types.ObjectId.isValid(query.label)) {
+    delete query.label;
+    unsetQuery.label = "";
+  }
 
   if (req.params.id === 'null' || req.params.id === 'undefined') {
     return res.status(400).json({
@@ -896,10 +903,6 @@ const update = async (req, res) => {
     }).catch((err) => {
       console.log('err', err);
     });
-
-    if (query['label'] === '') {
-      delete query.label;
-    }
 
     let contact_old;
     if (req.body.email && req.body.email != '') {
@@ -999,16 +1002,10 @@ const update = async (req, res) => {
         });
     }
 
-    if (query['owner'] && query['owner'] === 'unassign') {
-      delete query.owner;
-      query['$unset'] = { owner: '' };
+    const updateQuery = { $set: query };
+    if(Object.keys(unsetQuery)?.length){
+      updateQuery['$unset'] = unsetQuery;
     }
-
-    const { $unset, ...setFields } = query;
-    const updateQuery = {
-      ...(Object.keys(setFields).length && { $set: setFields }),
-      ...($unset && { $unset }),
-    };
 
     Contact.updateOne({ _id: contact.id }, updateQuery)
       .then(async () => {

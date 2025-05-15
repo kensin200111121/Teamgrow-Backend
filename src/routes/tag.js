@@ -10,6 +10,7 @@ router.post('/', checkAppJwtAuth, catchError(TagCtrl.create));
 router.get('/', checkGlobalAuth, catchError(TagCtrl.getAll));
 // TODO: Remove the following endpoint
 router.get('/getAll', checkGlobalAuth, catchError(TagCtrl.getAll));
+router.get('/shared-tags/:id', checkGlobalAuth, catchError(TagCtrl.getSharedAll));
 router.get(
   '/getAllForTeam',
   checkGlobalAuth,

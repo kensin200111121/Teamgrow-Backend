@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Label = require('../models/label');
 const Contact = require('../models/contact');
+const Team = require('../models/team');
 const system_settings = require('../configs/system_settings');
 
 const create = async (req, res) => {
@@ -132,18 +133,47 @@ const getAll = async (req, res) => {
 const getSharedAll = async (req, res) => {
   const { currentUser } = req;
 
-  const _contacts = await Contact.find({
-    shared_members: currentUser.id,
-    user: { $nin: currentUser.id },
-  });
+  const userId = currentUser._id;
+  const teamList = await Team.find({ members: userId }).select({ _id: 1 });
+  const teamListIds = teamList.map((e) => e._id);
+  findQuery = {
+    $and : [
+      {
+        $or: [
+          { shared_members: userId },
+          { 'shared_team.0': { $in: teamListIds }, shared_all_member: true },
+        ]
+      },
+      { user: { $ne: userId } },
+    ]
+  };
+  
+  const shared_contacts = await Contact.find(findQuery).catch(() => {});
+  const shared_users = shared_contacts.map(d => d.user);
+  const result = {};
 
-  const _users = _contacts.map((e) => e.user[0]);
+  for(const user of shared_users){
+    if(!user?.length){
+      continue;
+    }
 
-  const _label_list = await Label.find({ user: { $in: _users } });
+    let _label_list = await Label.find({ user }).sort({ priority: -1 });
+  
+    let _label_admin = [];
+    if (currentUser.source !== 'vortex') {
+      _label_admin = await Label.find({
+        role: 'admin',
+      }).sort({ priority: 1 });
+      _label_list = _label_list.filter(l => l.role != 'admin');
+    }
+  
+    Array.prototype.push.apply(_label_list, _label_admin);
+    result[user] = _label_list;
+  }
 
   res.send({
     status: true,
-    data: _label_list,
+    data: result,
   });
 };
 

@@ -44,7 +44,6 @@ const {
   resumeAccount,
   renewAccount,
   checkDowngrade: checkDowngradeAccount,
-  getSubAccounts: getSubAccountsAccount,
 } = require('../user');
 
 const {
@@ -204,11 +203,7 @@ const checkDowngrade = async (req, res) => {
 
 const getSubAccounts = async (req, res) => {
   const { currentUser } = req;
-  if (
-    currentUser.is_primary &&
-    currentUser.organization_info?.is_enabled &&
-    currentUser.organization
-  ) {
+  if (currentUser.organization_info?.is_enabled && currentUser.organization) {
     const users = await User.find({
       organization: currentUser.organization,
       del: false,
@@ -239,21 +234,12 @@ const getSubAccounts = async (req, res) => {
       },
     });
   } else {
-    if (currentUser.is_primary && currentUser.organization_info?.is_enabled) {
-      const total = currentUser.organization_info
-        ? currentUser.organization_info.max_count
-        : 0;
-      return res.send({
-        status: true,
-        data: {
-          users: [],
-          total,
-        },
-      });
-    }
-    return res.status(400).json({
-      status: false,
-      error: 'No primary account',
+    return res.send({
+      status: true,
+      data: {
+        users: [],
+        total: 0,
+      },
     });
   }
 };

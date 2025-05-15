@@ -617,15 +617,42 @@ const edit = async (req, res) => {
   const dealId = req.params.id;
   const body = req.body;
   const { contacts, team_members, applyChangeToTimelines } = req.body;
-  const currentDeal = await Deal.findOne({
-    _id: dealId,
-    user: currentUser._id,
-  }).catch((err) => {
+
+  let currentDeal;
+  try {
+    const dealQuery = { _id: dealId };
+
+    if (currentUser.organization) {
+      const organization = await Organization.findById(currentUser.organization)
+        .select('members.user owner')
+        .lean();
+
+      const userIds = [
+        ...new Set([
+          ...(organization?.members?.map((m) => String(m.user)) || []),
+          String(organization?.owner),
+        ]),
+      ];
+
+      if (userIds.length === 0) {
+        return res.status(400).send({
+          status: false,
+          error: 'No users in organization',
+        });
+      }
+
+      dealQuery.user = { $in: userIds };
+    } else {
+      dealQuery.user = currentUser._id;
+    }
+
+    currentDeal = await Deal.findOne(dealQuery);
+  } catch (err) {
     return res.status(500).send({
       status: false,
       error: err.message || JSON.stringify(err),
     });
-  });
+  }
 
   if (!currentDeal) {
     return res.status(400).send({
@@ -660,7 +687,7 @@ const edit = async (req, res) => {
   let removeContactIds = original_contacts;
   const addContactIds = [];
   contacts.forEach((contact) => {
-    if (!original_contacts.includes(new mongoose.Types.ObjectId(contact))) {
+    if (!original_contacts.includes(new mongoose.Types.ObjectId(contact._id))) {
       addContactIds.push(new mongoose.Types.ObjectId(contact));
     } else {
       removeContactIds = removeContactIds.filter(
@@ -681,7 +708,7 @@ const edit = async (req, res) => {
   Deal.updateOne(
     {
       _id: req.params.id,
-      user: currentUser.id,
+      user: currentDeal.user,
     },
     { $set: { ...body, primary_contact } }
   )
@@ -1823,10 +1850,7 @@ const updateFollowUp = async (req, res) => {
   }
   if (due_date) {
     const startdate = moment(due_date);
-    const remind_at = is_full
-      ? undefined
-      : startdate.subtract(reminder_before, 'minutes');
-    query = { ...query, remind_at, status: 0 };
+    query = { ...query, status: 0 };
   }
 
   const follow_up = await FollowUp.findOne({

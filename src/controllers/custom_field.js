@@ -7,14 +7,21 @@ const create = async (req, res) => {
   const { currentUser } = req;
   const { name } = req.body;
 
-  const custom_fd = new CustomField({
+  const filter = currentUser.organization
+    ? { organization: currentUser.organization }
+    : { user: currentUser._id };
+
+  const customFieldData = {
     ...req.body,
-    user: currentUser.id,
-  });
+    ...filter,
+    user: currentUser._id,
+  };
+
+  const custom_fd = new CustomField(customFieldData);
 
   try {
     const existingField = await CustomField.findOne({
-      user: currentUser.id,
+      ...filter,
       name: { $regex: `^${name}$`, $options: 'i' },
     });
 
@@ -32,7 +39,7 @@ const create = async (req, res) => {
     if (message.includes('duplicate key error')) {
       message = 'Custom Field with this name is created already';
     }
-    res.status(500).json({
+    return res.status(500).json({
       status: false,
       error: message || 'Custom Field creating failed.',
     });
@@ -43,8 +50,12 @@ const getAll = async (req, res) => {
   const { currentUser } = req;
   const { kind } = req.params;
 
+  const filter = currentUser.organization
+    ? { organization: currentUser.organization }
+    : { user: currentUser.id };
+
   const _fields = await CustomField.find({
-    user: currentUser.id,
+    ...filter,
     kind,
   });
 
@@ -57,59 +68,67 @@ const getAll = async (req, res) => {
 const update = async (req, res) => {
   const data = req.body;
   const { currentUser } = req;
+  const { id } = req.params;
 
-  const currentField = await CustomField.findOne({
-    _id: req.params.id,
-    user: currentUser.id,
-  });
-  if (currentField) {
-    const query = {
-      user: currentUser.id,
-      [`additional_field.${currentField.name}`]: { $exists: true },
+  const filter = currentUser.organization
+    ? { organization: currentUser.organization }
+    : { user: currentUser.id };
+
+  try {
+    const customField = await CustomField.findOne({
+      _id: id,
+      ...filter,
+    });
+
+    if (!customField) {
+      return res.status(404).json({
+        status: false,
+        error: 'Custom Field not found',
+      });
+    }
+
+    const additionalFilter = {
+      ...filter,
+      [`additional_field.${customField.name}`]: { $exists: true },
     };
 
-    const Model = currentField.kind === 'contact' ? Contact : Deal;
+    const Model = customField.kind === 'contact' ? Contact : Deal;
     const updateOps = {
       $rename: {
-        [`additional_field.${currentField.name}`]: `additional_field.${data.name}`,
+        [`additional_field.${customField.name}`]: `additional_field.${data.name}`,
       },
     };
 
-    await Model.updateMany(query, updateOps).catch((ex) => {
+    await Model.updateMany(additionalFilter, updateOps).catch((ex) => {
       console.log('custom-field updating has errors: ', ex.message);
     });
 
-    CustomField.updateOne(
-      {
-        _id: req.params.id,
-        user: currentUser.id,
-      },
-      { $set: data }
-    )
-      .then(() => {
-        res.send({
-          status: true,
-        });
-      })
-      .catch((err) => {
-        let message = err.message || '';
-        if (message.includes('duplicate key error')) {
-          message = 'Name is taken already';
-        }
-        res.status(500).json({
-          status: false,
-          error: message || 'Custom Field Update Error',
-        });
-      });
+    await CustomField.updateOne({ _id: id, ...filter }, { $set: data });
+
+    return res.send({ status: true });
+  } catch (err) {
+    let message = err.message || '';
+    if (message.includes('duplicate key error')) {
+      message = 'Name is taken already';
+    }
+    return res.status(500).json({
+      status: false,
+      error: message || 'Custom Field Update Error',
+    });
   }
 };
 
 const remove = async (req, res) => {
   const { currentUser } = req;
+  const { id } = req.params;
+
+  const filter = currentUser.organization
+    ? { organization: currentUser.organization }
+    : { user: currentUser.id };
 
   await CustomField.deleteOne({
-    _id: req.params.id,
-    user: currentUser.id,
+    _id: id,
+    ...filter,
   });
 
   // await Contact.updateMany(
@@ -128,13 +147,22 @@ const remove = async (req, res) => {
 const removeFields = async (req, res) => {
   const { currentUser } = req;
   const { fields } = req.body;
-  const query = {
-    user: mongoose.Types.ObjectId(currentUser.id),
-    _id: { $in: fields },
-  };
-  await CustomField.deleteMany(query, { multi: true });
 
-  // await CustomField.updateMany(
+  const filter = currentUser.organization
+    ? { organization: currentUser.organization }
+    : { user: currentUser.id };
+
+  await CustomField.deleteMany(
+    {
+      _id: { $in: fields },
+      ...filter,
+    },
+    {
+      multi: true,
+    }
+  );
+
+  // await SomeModel.updateMany(
   //   {
   //     user: mongoose.Types.ObjectId(currentUser.id),
   //     label: { $in: fields },

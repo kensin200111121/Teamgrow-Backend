@@ -74,13 +74,16 @@ app.use(
   })
 );
 // app.use(express.static('../crmgrow/dist'));
+app.get('/health', (req, res) => {
+  res.send('Cool!');
+});
 
 app.use('/app', appRouter);
 app.use('/api', appRouter); // keep this for a month
 app.use('/micro', microRouter);
 app.use('/admin', adminRouter);
 app.use('/api-v2', apiRouter);
-app.use('/', materialRouter);
+// app.use('/', materialRouter);
 app.use(
   '/embed',
   (req, _, next) => {

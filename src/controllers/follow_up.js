@@ -114,7 +114,6 @@ const createFollowUp = async (createData, activity_content = 'added task') => {
       follow_up = new FollowUp({
         ...createData,
         due_date: undefined,
-        remind_at: undefined,
         parent_follow_up: undefined,
         user: createData.user,
         ...(ownerId && { owner: ownerId }),
@@ -157,9 +156,6 @@ const createFollowUp = async (createData, activity_content = 'added task') => {
             recurrence_date: undefined,
             parent_follow_up: follow_up.id,
             due_date: update_date.clone(),
-            remind_at: createData.is_full
-              ? undefined
-              : update_date.clone().subtract(reminder_before, 'minutes'),
             user: createData.user,
             ...(ownerId && { owner: ownerId }),
           });
@@ -190,11 +186,6 @@ const createFollowUp = async (createData, activity_content = 'added task') => {
     } else {
       follow_up = new FollowUp({
         ...createData,
-        remind_at: createData.is_full
-          ? undefined
-          : moment(createData.due_date)
-              .clone()
-              .subtract(reminder_before, 'minutes'),
         user: createData.user,
         ...(ownerId && { owner: ownerId }),
       });
@@ -316,11 +307,7 @@ const update = async (req, res) => {
 
   if (due_date || contact) {
     const startdate = moment(due_date);
-    const remind_at = is_full
-      ? undefined
-      : startdate.subtract(reminder_before, 'minutes');
-
-    query = { ...query, remind_at, status: 0 };
+    query = { ...query, status: 0 };
   }
 
   const follow_up = await FollowUp.findOne({ _id: req.params.id }).catch(
@@ -904,10 +891,6 @@ const completed = async (req, res) => {
                 ...last_recurrence._doc,
                 due_date: update_date.clone(),
                 status: 0,
-                remind_at:
-                  last_recurrence.deal || last_recurrence.is_full
-                    ? undefined
-                    : update_date.clone().subtract(reminder_before, 'minutes'),
               });
               new_follow_up.save().catch((err) => {
                 console.log('new followup save err', err.message);
@@ -1083,7 +1066,6 @@ const getByDate = async (req, res) => {
         user: currentUser._id,
         status: 0,
         due_date: { $lt: current_time },
-        contact: { $ne: null },
       }).populate('contact');
 
       res.send({
@@ -1096,10 +1078,9 @@ const getByDate = async (req, res) => {
       const start = moment().tz(time_zone).startOf('day'); // set to 12:00 am today
       const end = moment().tz(time_zone).endOf('day'); // set to 23:59 pm today
       const _follow_up = await FollowUp.find({
-        user: currentUser._id,
+        $or: [{ user: currentUser._id }, { owner: currentUser._id }],
         status: { $in: [0, 2] },
         due_date: { $gte: start, $lt: end },
-        contact: { $ne: null },
       }).populate('contact');
 
       res.send({
@@ -1117,7 +1098,6 @@ const getByDate = async (req, res) => {
         user: currentUser._id,
         status: { $in: [0, 2] },
         due_date: { $gte: tomorrow_start, $lt: tomorrow_end },
-        contact: { $ne: null },
       }).populate('contact');
 
       res.send({
@@ -1136,7 +1116,6 @@ const getByDate = async (req, res) => {
         user: currentUser._id,
         status: 0,
         due_date: { $gte: next_week_start, $lt: next_week_end },
-        contact: { $ne: null },
       });
 
       res.send({
@@ -1152,7 +1131,6 @@ const getByDate = async (req, res) => {
         user: currentUser._id,
         status: 0,
         due_date: { $gte: start_month, $lt: end_month },
-        contact: { $ne: null },
       });
 
       res.send({
@@ -1167,7 +1145,6 @@ const getByDate = async (req, res) => {
         user: currentUser._id,
         status: 0,
         due_date: { $gte: start_future },
-        contact: { $ne: null },
       });
 
       res.send({
@@ -1288,12 +1265,6 @@ const updateChecked = async (req, res) => {
         } else {
           _follow_up = new FollowUp({
             ...follow_up,
-            remind_at:
-              follow_up.deal || follow_up.is_full
-                ? undefined
-                : moment(follow_up.due_date)
-                    .clone()
-                    .subtract(reminder_before, 'minutes'),
             status: 1,
           });
           _follow_up.save().catch((err) => {
@@ -1385,12 +1356,6 @@ const bulkUpdate = async (req, res) => {
       } else {
         _follow_up = new FollowUp({
           ...follow_up,
-          remind_at:
-            follow_up.deal || follow_up.is_full
-              ? undefined
-              : moment(follow_up.due_date)
-                  .clone()
-                  .subtract(reminder_before, 'minutes'),
         });
         _follow_up.save().catch((err) => {
           console.log('new recurring followup save err', err.message);
@@ -1720,7 +1685,6 @@ const load = async (req, res) => {
       const recurrences = await FollowUp.find({
         ...query,
         due_date: undefined,
-        remind_at: undefined,
         parent_follow_up: undefined,
         status: 0,
         set_recurrence: true,

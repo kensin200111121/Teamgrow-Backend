@@ -24,7 +24,7 @@ const { PACKAGE } = require('../constants/package');
 const { createNotification } = require('../helpers/notification');
 const { getMaterials, getResources } = require('../helpers/automation');
 const { getTextMaterials } = require('../helpers/utility');
-const { removeSharedItems } = require('../helpers/user');
+const { removeSharedItems, migrateSubAccountInfo } = require('../helpers/user');
 const { getAllFolders, checkFolderIsShared } = require('../helpers/folder');
 const {
   downloadResources,
@@ -230,6 +230,10 @@ const updateOrganization = async (req, res) => {
       owner,
       activeMembers
     ).catch((e) => console.log(e));
+
+    inActiveMembers.forEach(async (member) => {
+      await migrateSubAccountInfo(member);
+    });
     Organization.updateOne(
       { _id: exists._id },
       {

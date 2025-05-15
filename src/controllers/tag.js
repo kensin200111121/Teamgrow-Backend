@@ -182,6 +182,55 @@ const getAll = async (req, res) => {
   });
 };
 
+const getSharedAll = async (req, res) => {
+  const _id = req.params.id;
+  const _tags = await Tag.findOne({
+    user: _id,
+  });
+  const data = await Contact.aggregate([
+    {
+      $match: { user: mongoose.Types.ObjectId(_id) },
+    },
+    {
+      $unwind: {
+        path: '$tags',
+      },
+    },
+    {
+      $group: {
+        _id: '$tags',
+        name: { $addToSet: '$_id' },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+  data.forEach((e, index) => {
+    data[index] = {
+      ...data[index],
+      count: e.name.length,
+    };
+    delete data[index].name;
+  });
+  if (_tags && _tags.tags.length) {
+    _tags.tags.forEach((tag) => {
+      const index = data.findIndex((e) => e._id === tag);
+      if (index === -1) {
+        const _tag = {
+          _id: tag,
+          count: 0,
+        };
+        data.push(_tag);
+      }
+    });
+  }
+  res.send({
+    status: true,
+    data,
+  });
+};
+
 const getAllForTeam = async (req, res) => {
   const { currentUser } = req;
 
@@ -197,7 +246,7 @@ const getAllForTeam = async (req, res) => {
 
   let userIds;
   if (internalTeam) {
-    const userIds = internalTeam.members || [];
+    userIds = internalTeam.members || [];
     userIds.push(internalTeam.owner);
   } else {
     userIds = [currentUser.id];
@@ -549,6 +598,7 @@ module.exports = {
   create,
   search,
   getAll,
+  getSharedAll,
   getTagsDetail,
   getTagsDetail1,
   updateTag,
